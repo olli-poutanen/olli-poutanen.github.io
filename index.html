@@ -146,24 +146,24 @@
 
     }
   	var myTimer = new Timer(secs);
+    
+    document.getElementById("Start").addEventListener("click", function(){
+      change();
+    });
+		
+    document.getElementById("Start").textContent = "Pause";
+    function change(){
+        var elem = document.getElementById("Start");
+        if (elem.textContent=="Pause"){
+          elem.textContent = "Resume";
+        }
+        else elem.textContent = "Pause";
+    }
   }
 
 document.getElementById("Start").addEventListener("click", runner);
 function runner(){
 	Starter(Sset);
-}
-document.getElementById("Start").addEventListener("click", function(){
-	change();
-});
-
-function change() // no ';' here
-{
-    var elem = document.getElementById("Start");
-    if (elem.textContent=="Start"){
-    	elem.textContent = "Pause";
-      
-    }
-    else elem.textContent = "Start";
 }
                  
        
