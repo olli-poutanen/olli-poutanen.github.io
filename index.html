@@ -1,41 +1,158 @@
-// ####################################################
- function MainTimer(Tunti) {
-        var cntDownDate = new Date(new Date().getTime()+Tunti*60*60*1000);
-
-          var y = setInterval(function() {
-
-            // Get today's date and time
-            var nyt = new Date().getTime();
-
-            // Find the distance between now and the count down date
-            var dist = cntDownDate - nyt;
-
-            // Time calculations for days, hours, minutes and seconds
-            var Hs = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var Ms = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
-            var Ss = Math.floor((dist % (1000 * 60)) / 1000);
-
-            // Display the result in the element with id="demo"
-            document.getElementById("demo").innerHTML = Hs + ":" + leadingZero(Ms) + ":" + leadingZero(Ss);
-        
-            // If the count down is finished, write some text
-            if (dist < 0) {
-              clearInterval(y);
-              document.getElementById("demo").innerHTML = "EXPIRED";
-              return;
-            }
-          }, 1000);
-          
-        function addMoreMins2() {
-         	if(Running==0){
-            	clearInterval(y);
-            	Timer(Saved);
-            }
+<!-- <!DOCTYPE html> -->
+    <html>
+    <head>
+      <style>
+        span {
+          text-align: center;
+          font-size: 60px;
         }
+        p {
+          text-align: center;
+          font-size: 60px;
+        }
+        #buttons {
+          margin-top: 20px;
+          position: relative;
+        }
+        button {
+          margin: 0 5px;
+        }
+        #main {
+          width: 100%;
+          text-align: center;
+        }
+      </style>
+    </head>
 
+    <body>
+      <div id="main">
+        <span id="count-down"></span>
+        <div id="buttons">
+          <button id="5mins" data-mins="5">Add 5 Mins</button>
+          <button id="15mins" data-mins="15">Add 15 Mins</button>
+        </div>
+      </div>
+      <div id="main">
+      <p id="demo"></p>
+      </div>
+      
+      <script>
+      var Hset=0;
+      var Mset=0;
+      var Sset=3;
+      var secs = 3; 
 
-        document.getElementById("5mins").addEventListener("click", addMoreMins2);
-        document.getElementById("15mins").addEventListener("click", addMoreMins2);
+        function pausenow(orig,curr,t) {
+		TimeLeft = orig;
+		TimeLeft -= new Date() - curr;
+		clearInterval(t);
+        }
         
-}
-          // ####################################################
+// ####################################################
+	function MainTimer(Tunti) {
+		var cntDownDate = new Date(new Date().getTime()+Tunti*60*60*1000);
+
+		var y = setInterval(function() {
+
+			// Get today's date and time
+			var nyt = new Date().getTime();
+
+			// Find the distance between now and the count down date
+			var dist = cntDownDate - nyt;
+
+			// Time calculations for days, hours, minutes and seconds
+			var Hs = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			var Ms = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+			var Ss = Math.floor((dist % (1000 * 60)) / 1000);
+
+			// Display the result in the element with id="demo"
+			document.getElementById("demo").innerHTML = Hs + ":" + leadingZero(Ms) + ":" + leadingZero(Ss);
+        
+			// If the count down is finished, write some text
+			if (dist < 0) {
+				clearInterval(y);
+				document.getElementById("demo").innerHTML = "EXPIRED";
+				return;
+			}
+		}, 1000);
+          
+		function addMoreMins2() {
+			if(Running==0){
+				clearInterval(y);
+				Timer(Saved);
+			}
+		}
+
+		document.getElementById("5mins").addEventListener("click", addMoreMins2);
+		document.getElementById("15mins").addEventListener("click", addMoreMins2);
+	}
+
+// ####################################################
+
+
+	function Timer(secs) {
+    	Running=1;
+			function updateTimer() {
+        	    // Get todays date and time
+				var now = new Date().getTime();
+				// Find the distance between now an the count down date
+				var diff = countDownDate.getTime() - now;
+				// Time calculations for days, hours, minutes and seconds
+				var hours = Math.floor(diff % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+				var minutes = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
+				var seconds = Math.floor(diff % (1000 * 60) / 1000);
+				
+				var dateString = leadingZero(hours) + ":" + leadingZero(minutes) + ":" 
+				+ leadingZero(seconds); 
+
+				if (diff < 0) {
+					Running=0;
+					Saved=(countDownDate.getTime() - now)/1000;
+                    clearInterval(x);
+					MainTimer(1);
+					return;
+				}
+				document.getElementById("count-down").innerHTML = dateString;
+				Saved=(countDownDate.getTime() - now)/1000;
+			}
+
+		var countDownDate = new Date(new Date().getTime() + secs*1000);
+
+		this.addMins = function(numMins) {
+			countDownDate.setTime(
+				countDownDate.getTime() + numMins * 60 * 1000
+			);
+			updateTimer();
+		};
+
+		updateTimer();
+          
+		var x = setInterval(function() {
+			updateTimer();
+		}, 1000);
+        
+		function addMoreMins1() {
+			myTimer.addMins(this.getAttribute("data-mins"));
+		}
+        
+		document.getElementById("5mins").addEventListener("click", addMoreMins1);
+		document.getElementById("15mins").addEventListener("click", addMoreMins1);
+          
+	}
+
+	function leadingZero(n) {
+		return n < 10 ? "0" + n : n;
+	}
+
+	var myTimer = new Timer(secs);
+        
+          
+         
+
+
+        
+
+        
+      </script>
+      </body>
+</html>
