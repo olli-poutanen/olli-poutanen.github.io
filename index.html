@@ -33,6 +33,7 @@
   <body>
     <div id="main">
       <span id="count-down"></span>
+      
       <div id="buttons">
         <button id="3secs" data-mins="0.05">Add 3 Secs</button>
         <button id="5mins" data-mins="5">Add 5 Mins</button>
@@ -40,10 +41,17 @@
         <button id="Start">Start</button>
       </div>
     </div>
-    <div id="main">
+    
+    <div id="sub1">
       <p id="demo"></p>
     </div>
-
+    
+    <div id="sub2">
+      <button onclick="getLocation()">Show location</button>
+      <p id="geoloc"></p>
+    </div>
+    
+    
     <script>
       var Hset = 0;
       var Mset = 0;
@@ -228,6 +236,21 @@
 
       function runner() {
         Starter(Sset);
+      }
+      
+      var geo = document.getElementById("geoloc");
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else { 
+          geo.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+
+      function showPosition(position) {
+        geo.innerHTML = "Latitude: " + position.coords.latitude + 
+        "<br>Longitude: " + position.coords.longitude;
       }
 
     </script>
