@@ -71,6 +71,9 @@
         
         	function Resume(){
           	document.getElementById("Start").removeEventListener("click", Resume);
+            document.getElementById("3secs").removeEventListener("click", addMoreMins2);
+          	document.getElementById("5mins").removeEventListener("click", addMoreMins2);
+          	document.getElementById("15mins").removeEventListener("click", addMoreMins2);
           	myMainTimer = new MainTimer(timeLeft);
           }
           
@@ -121,19 +124,18 @@
           	myTimer=new Timer(this.getAttribute("data-mins")*60, SavedMain, 0);
           }
 
-					if(first==1){
-            document.getElementById("3secs").addEventListener("click", addMoreMins2);
-            document.getElementById("5mins").addEventListener("click", addMoreMins2);
-            document.getElementById("15mins").addEventListener("click", addMoreMins2);
-           }
-           
+          document.getElementById("3secs").addEventListener("click", addMoreMins2);
+          document.getElementById("5mins").addEventListener("click", addMoreMins2);
+          document.getElementById("15mins").addEventListener("click", addMoreMins2); 
           document.getElementById("Start").addEventListener("click", Pause); 
         }
 
         // ####################################################
 
         function Timer(secs, Main, first) {
-                
+          
+          Paused=0;
+          
           function updateTimer(t, countDownDate, Mainval, first) {
             // Get todays date and time
             var now = new Date().getTime();
@@ -148,7 +150,6 @@
               leadingZero(seconds);
 
             if (diff < 0) {
-              Running = 0;
               clearInterval(t);
               document.getElementById("Start").removeEventListener("click", Pause);
               myMainTimer = new MainTimer(Mainval, first);
@@ -160,11 +161,13 @@
           var toDate = new Date(new Date().getTime() + secs * 1000);
           
           function Resume(){
+          	Paused=0;
           	document.getElementById("Start").removeEventListener("click", Resume);
           	myTimer=new Timer(timeLeft, Main, first);
           }
           
           function Pause(){
+          	Paused = 1;
          		clearInterval(x);
             timeLeft=(toDate-new Date().getTime())/1000;
             document.getElementById("Start").removeEventListener("click", Pause);
@@ -172,9 +175,12 @@
           }
           
           this.addMins = function(numMins) {
-            toDate.setTime(
-              toDate.getTime() + numMins * 60 * 1000
-            );
+          	if(Paused==1){
+           		toDate.setTime(new Date().getTime()+timeLeft * 1000 + numMins * 60 * 1000);
+              timeLeft+=numMins * 60;
+            } else{
+              toDate.setTime(toDate.getTime() + numMins * 60 * 1000);
+            }  
             updateTimer(x, toDate, Main, first);
           };
           
