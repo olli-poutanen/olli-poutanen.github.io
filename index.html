@@ -275,9 +275,9 @@
       let lat = position.coords.latitude;
       let long = position.coords.longitude;
 
-			var geodist = geodistance(lat,long,60.451,22.266);
+			var geod = geodistance(lat,long,60.451,22.266);
 
-      document.getElementById("geodisttext").innerHTML = (geodist).toFixed(2) + "km";
+      document.getElementById("geodisttext").innerHTML = (geod).toFixed(4) + "km";
   	});
 
       function getLocation() {
