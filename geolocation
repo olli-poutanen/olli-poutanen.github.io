@@ -1,4 +1,8 @@
-     
+let coordinates = [
+{name:'Korppoo',lat:60.434821, long:22.237775},
+{name:'Annes',lat:60.444473, long:22.245686},
+{name:'Koti',lat:60.444957, long:22.243842}]
+
 function getLocation(){ 
 	navigator.geolocation.getCurrentPosition(function(position){
 		
