@@ -277,8 +277,9 @@
 
 			var geod = geodistance(lat,long,60.451,22.266);
 
-      document.getElementById("geodisttext").innerHTML = (geod/1000).toFixed(1) + "m";
-  	});
+      document.getElementById("geodisttext").innerHTML = (geod*1000).toFixed(1) + "m";
+  	}, function error(msg) {alert('Please enable your GPS position feature.');},
+    {maximumAge:10000, timeout:5000, enableHighAccuracy: true});
 
       function getLocation() {
         if (navigator.geolocation) {
