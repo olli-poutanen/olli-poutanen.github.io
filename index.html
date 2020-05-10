@@ -277,7 +277,7 @@
 
 			var geod = geodistance(lat,long,60.451,22.266);
 
-      document.getElementById("geodisttext").innerHTML = (geod).toFixed(4) + "km";
+      document.getElementById("geodisttext").innerHTML = (geod/1000).toFixed(1) + "m";
   	});
 
       function getLocation() {
