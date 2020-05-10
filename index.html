@@ -67,6 +67,13 @@
       <loc id="geodistacc"></loc>
     </div>
     
+    <div id ="sub6">
+      <button id="changelimit5" meters="5">lim=5m</button>
+      <button id="changelimit10" meters="10">lim=10m</button>
+      <button id="changelimit25" meters="25">lim=25m</button>
+      <button id="changelimit50" meters="50">lim=50m</button>
+    </div>
+    
     <script>
       var Hset = 0;
       var Mset = 0;
@@ -101,6 +108,7 @@
           geodist = geodist * 180/Math.PI;
           geodist = geodist * 60 * 1.1515;
           geodist = geodist * 1.609344;
+          geodist = geodist*1000;
           return geodist;
         }
       }
@@ -274,29 +282,33 @@
         Starter(Sset);
       }
       
-      var geo = document.getElementById("geoloc");
-			navigator.geolocation.getCurrentPosition(function(position) {
-      let lat = position.coords.latitude;
-      let long = position.coords.longitude;
+function getLocation(){ 
+	navigator.geolocation.getCurrentPosition(function(position){
+		
+    let lat = position.coords.latitude;
+    let long = position.coords.longitude;
+		
+    var geod = geodistance(lat,long,60.444473, 22.245686);
+		
+    if(geod<limit){document.getElementById("geodistacc").innerHTML = "FOUND";}
+    else{document.getElementById("geodistacc").innerHTML = "NOT FOUND";}
+    
+    document.getElementById("geodisttext").innerHTML = geod.toFixed(1) + "m";
+ }, 
+	function error(msg) {alert('Please enable your GPS position feature.');},
+  {maximumAge:0, timeout:5000, enableHighAccuracy: true});
+}
 
-			var geod = geodistance(lat,long,60.451,22.266);
-			document.getElementById("geodistacc").innerHTML = position.coords.accuracy;
-      document.getElementById("geodisttext").innerHTML = (geod*1000).toFixed(1) + "m";
-  	}, function error(msg) {alert('Please enable your GPS position feature.');},
-    {maximumAge:0, timeout:5000, enableHighAccuracy: true});
+document.getElementById("changelimit5").addEventListener("click",changelimit);
+document.getElementById("changelimit10").addEventListener("click",changelimit);
+document.getElementById("changelimit25").addEventListener("click",changelimit);
+document.getElementById("changelimit50").addEventListener("click",changelimit);
 
-      function getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-        } else { 
-          geo.innerHTML = "Geolocation is not supported by this browser.";
-        }
-      }
+limit=5;
 
-      function showPosition(position) {
-        geo.innerHTML = "Latitude: " + position.coords.latitude.toFixed(3) + 
-        "<br>Longitude: " + position.coords.longitude.toFixed(3);
-      }
+function changelimit(){
+	limit=this.getAttribute("meters");
+}
 
     </script>
   </body>
