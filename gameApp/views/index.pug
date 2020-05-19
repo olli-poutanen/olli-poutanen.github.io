@@ -1,0 +1,43 @@
+head
+  link(rel='stylesheet', href='stylesheets/styles.css')
+.tab
+  button.tablinks(onclick="openTab(event, 'main')") Main
+  button.tablinks(onclick="openTab(event, 'tasks')") Tehtävät
+#main.tabcontent
+  span#count-down
+  #buttons
+    button#3secs(data-mins='0.05') Add 3 Secs
+    button#5mins(data-mins='5') Add 5 Mins
+    button#15mins(data-mins='15') Add 15 Mins
+    button#Start Start
+    button#Test Test
+  div
+    input#rosvo(type='image', src='images/rosvo.jpg')
+  #sub1
+    p#demo
+  #sub2
+    button(onclick='getLocation()') Show location
+  #sub3
+    loc#geoloc
+  #sub4
+    loc#geodisttext
+  #sub5
+    loc#geodistacc
+  #sub6
+    button#changelimit5(meters='5') lim=5m
+    button#changelimit10(meters='10') lim=10m
+    button#changelimit25(meters='25') lim=25m
+    button#changelimit50(meters='50') lim=50m
+#tasks.tabcontent
+  p Here is a list of tasks
+div(class="messages-wrapper")
+  ul(id="message-container")
+div(class="input-wrapper")
+  form(id="chat")
+    div
+      label write message
+      input(type="text" placeholder="Enter message" id="chat-message" name="chat-message")
+script(src="javascripts/websocket.js")
+script(src="javascripts/timer.js")
+script(src="javascripts/geolocation.js")
+script(src="javascripts/Tabs.js")
