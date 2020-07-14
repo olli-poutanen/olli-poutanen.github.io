@@ -33,20 +33,25 @@
         text-align: center;
       }
 
+.kartta {
+  width: 100%;
+  height: 100%;
+}
+
 /* Container needed to position the button. Adjust the width as needed */
-.container {
+.rosvo {
   position: relative;
   width: 50%;
 }
 
 /* Make the image responsive */
-.container img {
+.rosvo {
   width: 10%;
   height: 10%;
 }
 
 /* Style the button and place it in the middle of the container/image */
-.container .btn {
+.rosvo .btn {
   position: absolute;
   width: 10%;
   height: 50%;
@@ -64,7 +69,7 @@
   z-index: 1;
 }
 
-.container .btn:hover {
+.rosvo .btn:hover {
   background-color: black;
 }
 
@@ -103,4 +108,19 @@
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
+  }
+
+  .hidden-first{
+    display: none;
+  }
+
+  /* login page */
+
+  .login-form{
+    height: 50%;
+    width: 400%;
+  }
+
+  label {
+    margin-right: 5px;
   }

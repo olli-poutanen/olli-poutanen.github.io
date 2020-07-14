@@ -1,28 +1,23 @@
 const ws = new WebSocket('ws://localhost:3002');
 
-var name='Jane Doe';
-var first = 0;
-
 ws.onopen = function() {
   console.log('connection established');
 };
 
+/* Kuuntelee viestiä serveriltä ja tekee käyttäjille uuden rivin saatuaan viestin */
 ws.onmessage = function(event) {
-  const li = document.createElement('li');
-  li.textContent = event.data;
-  const ul = document.getElementById('message-container');
-  ul.appendChild(li);
+  const th = document.createElement('th');
+  th.textContent = event.data;
+  const tr = document.getElementById('player');
+  tr.appendChild(th);
 }
 
-const form = document.getElementById('chat');
+/* Lähettää viestin serverille */
+const form = document.getElementById('gamedata');
 form.addEventListener('submit', function(event) {
-  const textInput = document.getElementById('chat-message');
-  const chatText = name + ": " + textInput.value;
-  if(first==0){
-    name=textInput.value;
-    first=1;
-  }
+  const textInput = document.getElementById('player-name');
+  const gameName = textInput.value;
   textInput.value = '';
-  ws.send(chatText);
+  ws.send(gameName);
   event.preventDefault();
 });

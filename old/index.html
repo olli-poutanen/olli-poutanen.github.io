@@ -1,0 +1,75 @@
+<!-- <!DOCTYPE html> -->
+<html>
+
+  <head>
+    <link rel="stylesheet" href="public/stylesheets/styles.css">
+  </head>
+
+  <div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'main')">Main</button>
+    <button class="tablinks" onclick="openTab(event, 'tasks')">Tehtävät</button>
+  </div>
+
+  <body>
+    <div id="main" class="tabcontent">
+
+      <span id="count-down"></span>
+
+      <div id="buttons">
+        <button id="3secs" data-mins="0.05">Add 3 Secs</button>
+        <button id="5mins" data-mins="5">Add 5 Mins</button>
+        <button id="15mins" data-mins="15">Add 15 Mins</button>
+        <button id="Start">Start</button>
+        <button id="Test">Test</button>
+      </div>
+
+      <div>
+        <input id="rosvo" type="image" src="public/images/rosvo.jpg"/>
+      </div>
+
+      <!--<div class="container">
+        <img src="rosvo.jpg">
+        <button class="btn">Button</button>
+      </div>-->
+      
+      <div id="sub1">
+        <p id="demo"></p>
+      </div>
+      
+      <div id="sub2">
+        <button onclick="getLocation()">Show location</button>
+      </div>
+      
+      <div id ="sub3">
+        <loc id="geoloc"></loc>
+      </div>
+      
+      <div id ="sub4">
+        <loc id="geodisttext"></loc>
+      </div>
+      
+      <div id ="sub5">
+        <loc id="geodistacc"></loc>
+      </div>
+      
+      <div id ="sub6">
+        <button id="changelimit5" meters="5">lim=5m</button>
+        <button id="changelimit10" meters="10">lim=10m</button>
+        <button id="changelimit25" meters="25">lim=25m</button>
+        <button id="changelimit50" meters="50">lim=50m</button>
+      </div>
+    
+  </div>
+
+  <div id="tasks" class="tabcontent">
+    <p>Here is a list of tasks</p>
+  </div>
+    
+    
+<script src="public/javascripts/timer.js"></script>
+<script src="public/javascripts/geolocation.js"></script>
+<script src="public/javascripts/Tabs.js"></script>
+	  
+  </body>
+
+</html>

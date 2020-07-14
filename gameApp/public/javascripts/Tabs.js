@@ -20,3 +20,10 @@ function openTab(evt, tabName) {
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
+function unhideTablink() {
+  hiddenLinks = document.getElementsByClassName("hidden-first");
+  for (i = 0; i < hiddenLinks.length; i++) {
+    hiddenLinks[i].style.display = "inline";
+  }
+}

@@ -9,14 +9,40 @@ var usersRouter = require('./routes/users');
 
 var WebSocket = require('ws');
 
-// openning a websocket server
+// opening a websocket server
 const wss = new WebSocket.Server({port: 3002});
 wss.on('connection', function(ws) {
-    ws.on('message', function sendToAllClients(message) {
-        wss.clients.forEach(function(client) {
-            client.send(message);
-        })
+
+  wss.clients.forEach(function(client) {
+    /* Update app data */
+  })
+
+  ws.on('message', function(message) {
+    /* Send to all */
+    wss.clients.forEach(function(client) {
+        client.send(message);
     })
+
+    /* Modify database */
+    var db = new sqlite3.Database('mydb.db');
+    db.serialize(function() {
+      
+      db.run('INSERT INTO games (name) VALUES ("' + data + '")')
+      
+      let sql = `SELECT game_id FROM games ORDER BY game_id DESC LIMIT 1`;
+      db.all(sql, [], (err, rows) => {
+        if (err) {
+          throw err;
+        }
+        rows.forEach((row) => {
+          var gameId = row.game_id;
+          console.log(row.game_id);
+        });
+      });
+      
+    });
+    db.close();
+  })
 });
 
 var app = express();
@@ -31,6 +57,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//gets changes and sends back updated pug
 app.get('*', function(req, res) {
   res.render('index');
 });
@@ -38,6 +65,7 @@ app.get('*', function(req, res) {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+//Websocket listen
 app.listen(3001, function() {
   console.log('listening on port 3001');
 });
@@ -46,14 +74,19 @@ app.listen(3001, function() {
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('mydb.db');
 
+let coordinates = [
+  {name:'Korppoo',lat:60.434821, long:22.237775},
+  {name:'Annes',lat:60.444473, long:22.245686},
+  {name:'Koti',lat:60.444957, long:22.243842}]
+
 db.serialize(function() {
 
-  db.run("CREATE TABLE if not exists user_info (info TEXT)");
-
-  db.all("select name from sqlite_master where type='table'", function(err,tables){
-    console.log(tables);
-  });
-
+  db.run("CREATE TABLE if not exists tokens (token_id integer PRIMARY KEY, game_id, name TEXT, lat, long, status TEXT, item TEXT)");
+  db.run("CREATE TABLE if not exists tasks (task_id integer PRIMARY KEY, game_id, lat, long, status TEXT)");
+  db.run("CREATE TABLE if not exists riddles (riddle_id integer PRIMARY KEY, game_id, lat, long, solution, status TEXT)");
+  db.run("CREATE TABLE if not exists players (player_id integer PRIMARY KEY, game_id, name TEXT, nickname TEXT, stats)");
+  db.run("CREATE TABLE if not exists games (game_id integer PRIMARY KEY, name TEXT, main_end, bank_end, run_bank)");
+  
 });
 
 db.close();
