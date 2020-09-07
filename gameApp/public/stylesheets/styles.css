@@ -6,7 +6,7 @@
 
       p {
         text-align: center;
-        font-size: 60px;
+        font-size: 40px;
       }
       
       loc{
@@ -34,13 +34,17 @@
       }
 
 .kartta {
-  width: 100%;
-  height: 100%;
+  /*width: 100%;
+  height: 100%;*/
+  width: 1024px; 
+  height: 720px; 
+  z-index: 0;
 }
 
 /* Container needed to position the button. Adjust the width as needed */
-.rosvo {
+.rosvo-cont {
   position: relative;
+  margin: auto; /*Centers the container*/
   width: 50%;
 }
 

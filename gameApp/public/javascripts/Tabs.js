@@ -18,12 +18,20 @@ function openTab(evt, tabName) {
 
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(tabName).style.display = "block";
+  map1.invalidateSize();
   evt.currentTarget.className += " active";
 }
 
-function unhideTablink() {
-  hiddenLinks = document.getElementsByClassName("hidden-first");
+function unhideTablink(className) {
+  hiddenLinks = document.getElementsByClassName(className);
   for (i = 0; i < hiddenLinks.length; i++) {
     hiddenLinks[i].style.display = "inline";
+  }
+}
+
+function hideTablink(className) {
+  hiddenLinks = document.getElementsByClassName(className);
+  for (i = 0; i < hiddenLinks.length; i++) {
+    hiddenLinks[i].style.display = "none";
   }
 }

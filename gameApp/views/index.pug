@@ -1,12 +1,20 @@
 head
   link(rel='stylesheet', href='stylesheets/styles.css')
+  link(rel='stylesheet', href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin="")
+  script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin="")
+div
+  p(id="title")
 .tab
-  button.tablinks(onclick="openTab(event, 'newgame')") Luo peli
-  button.tablinks(onclick="openTab(event, 'joingame')") Liity peliin
+  button.tablinks(class="show-first" onclick="openTab(event, 'newgame')") Luo peli
+  button.tablinks(class="show-first" onclick="openTab(event, 'joingame')") Liity peliin
   button.tablinks(class="hidden-first" onclick="openTab(event, 'main')") Main
   button.tablinks(class="hidden-first" onclick="openTab(event, 'tasks')") Tehtävät
   button.tablinks(class="hidden-first" onclick="openTab(event, 'riddles')") Arvoitukset
-  button.tablinks(class="hidden-first" onclick="openTab(event, 'map')") Kartta
+  button.tablinks(class="nothidden-first" onclick="openTab(event, 'map')") Kartta
   button.tablinks(class="hidden-first" onclick="openTab(event, 'info')") Ohjeet
 
 #newgame.tabcontent
@@ -23,7 +31,7 @@ head
         input(type="text" placeholder="Valitse pelaajan nimi" id="player-name" name="player-name")
         br
         br
-        input(type="submit" value="Luo peli" onclick="unhideTablink()")
+        input(type="submit" value="Luo peli" onclick="unhideTablink('hidden-first')")
 
 #joingame.tabcontent
   p List of games here
@@ -54,11 +62,12 @@ head
     button#changelimit25(meters='25') lim=25m
     button#changelimit50(meters='50') lim=50m
   #sub7
-    table
-      tr
-        th Player 1
-      tr
-        th(id="player")
+    table(id="stats")
+      thead
+        tr
+          th Players
+          th Drinks
+      tbody
 
 #tasks.tabcontent
   p Here is a list of tasks
@@ -67,13 +76,28 @@ head
   p First riddle - Found - Not solved
 
 #map.tabcontent
-  div
-    input(class='kartta' type='image', src='images/kartta.jpg')
+  div(id="mapid" class="kartta")
+    script.
+      var mapOptions = {
+        center: [60.444, 22.266],
+        zoom: 14,
+        //minZoom: 14,
+        //maxBounds: [[60.4654, 22.2158], [60.4288, 22.3251]]
+      }
+      map1 = new L.map('mapid', mapOptions);
+      var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+      map1.addLayer(layer);
+
+      L.imageOverlay("images/kartta.jpg", [[60.4654, 22.2158], [60.4288, 22.3251]]).addTo(map1);
 
 #info.tabcontent
   p The name of the game is this...
+
 
 script(src="javascripts/websocket.js")
 script(src="javascripts/timer.js")
 script(src="javascripts/geolocation.js")
 script(src="javascripts/Tabs.js")
+script(src="javascripts/cookie.js")
+body(onload="checkCookie()")
