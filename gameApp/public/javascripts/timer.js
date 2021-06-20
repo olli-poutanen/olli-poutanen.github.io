@@ -1,4 +1,7 @@
-var Hset = 0;
+
+      document.getElementById("Start").addEventListener("click", runner);
+      
+      var Hset = 0;
       var Mset = 0;
       var Sset = 3;
       var MainSet=0.005;
@@ -13,27 +16,9 @@ var Hset = 0;
         TimeLeft -= new Date() - curr;
         clearInterval(t);
       }
-      
-      function geodistance(lat1, lon1, lat2, lon2) {
-        if ((lat1 == lat2) && (lon1 == lon2)) {
-          return 0;
-        }
-        else {
-          var radlat1 = Math.PI * lat1/180;
-          var radlat2 = Math.PI * lat2/180;
-          var theta = lon1-lon2;
-          var radtheta = Math.PI * theta/180;
-          var geodist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-          if (geodist > 1) {
-            geodist = 1;
-          }
-          geodist = Math.acos(geodist);
-          geodist = geodist * 180/Math.PI;
-          geodist = geodist * 60 * 1.1515;
-          geodist = geodist * 1.609344;
-          geodist = geodist*1000;
-          return geodist;
-        }
+
+      function runner() {
+        Starter(Sset);
       }
 
       function Starter() {
@@ -199,8 +184,6 @@ var Hset = 0;
         }
       }
 
-      document.getElementById("Start").addEventListener("click", runner);
 
-      function runner() {
-        Starter(Sset);
-      }
+
+      

@@ -9,13 +9,14 @@ head
 div
   p(id="title")
 .tab
-  button.tablinks(class="show-first" onclick="openTab(event, 'newgame')") Luo peli
+  button.tablinks(id='newgamebutton' class="show-first" onclick="openTab(event, 'newgame')") Luo peli
   button.tablinks(class="show-first" onclick="openTab(event, 'joingame')") Liity peliin
-  button.tablinks(class="hidden-first" onclick="openTab(event, 'main')") Main
+  button.tablinks(id='mainbutton' class="hidden-first" onclick="openTab(event, 'main')") Main
   button.tablinks(class="hidden-first" onclick="openTab(event, 'tasks')") Tehtävät
   button.tablinks(class="hidden-first" onclick="openTab(event, 'riddles')") Arvoitukset
-  button.tablinks(class="nothidden-first" onclick="openTab(event, 'map')") Kartta
+  button.tablinks(class="hidden-first" onclick="openTab(event, 'map')") Kartta
   button.tablinks(class="hidden-first" onclick="openTab(event, 'info')") Ohjeet
+  button.tablinks(class="hidden-first" onclick="logOut()") Kirjaudu ulos
 
 #newgame.tabcontent
   div(class="input-wrapper")
@@ -31,8 +32,9 @@ div
         input(type="text" placeholder="Valitse pelaajan nimi" id="player-name" name="player-name")
         br
         br
-        input(type="submit" value="Luo peli" onclick="unhideTablink('hidden-first')")
-
+        input(type="submit" value="Luo peli")
+        br
+    
 #joingame.tabcontent
   p List of games here
 
@@ -46,22 +48,20 @@ div
     button#Test Test
   div(class="rosvo-cont")
     input#rosvo(class="rosvo" type='image', src='images/rosvo.jpg')
-  #sub1
+  #sub
     p#demo
-  #sub2
-    button(onclick='getLocation()') Show location
-  #sub3
+  #sub
     loc#geoloc
-  #sub4
+  #sub
     loc#geodisttext
-  #sub5
+  #sub
     loc#geodistacc
-  #sub6
+  #sub
     button#changelimit5(meters='5') lim=5m
     button#changelimit10(meters='10') lim=10m
     button#changelimit25(meters='25') lim=25m
     button#changelimit50(meters='50') lim=50m
-  #sub7
+  #sub
     table(id="stats")
       thead
         tr
@@ -76,6 +76,15 @@ div
   p First riddle - Found - Not solved
 
 #map.tabcontent
+  p(id="testaus") testi
+  #sub
+    loc#testmap test = Null
+  #sub
+    br
+    button(onclick='searchTokens()') Search
+    button(onclick='startClock()') Start Timer
+    p(id="clock")
+    p(id="bank")
   div(id="mapid" class="kartta")
     script.
       var mapOptions = {
@@ -96,7 +105,7 @@ div
 
 
 script(src="javascripts/websocket.js")
-script(src="javascripts/timer.js")
+script(src="javascripts/timer2.js")
 script(src="javascripts/geolocation.js")
 script(src="javascripts/Tabs.js")
 script(src="javascripts/cookie.js")

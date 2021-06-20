@@ -35,3 +35,16 @@ function hideTablink(className) {
     hiddenLinks[i].style.display = "none";
   }
 }
+
+function logOut(){
+
+  //Unneeded if just refreshed
+  //hideTablink('hidden-first')
+  //unhideTablink('show-first')
+  //document.getElementById('newgamebutton').click();
+  //document.getElementById("title").innerHTML="";
+  
+  //Deletes cookie -> is it ok?
+  document.cookie = "game=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+  location.reload();
+}
